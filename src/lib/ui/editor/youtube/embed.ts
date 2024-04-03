@@ -1,14 +1,14 @@
-import { mergeAttributes, Node, nodePasteRule } from "@tiptap/core";
+import { mergeAttributes, Node } from "@tiptap/core";
 
 import {
+  getEmbedUrl,
   getEmbedUrlFromYoutubeUrl,
   isValidYoutubeUrl,
-  YOUTUBE_REGEX_GLOBAL,
 } from "./utils.js";
 
 import Preview from "./Preview.svelte";
 
-export interface YoutubeOptions {
+export interface EmbedOptions {
   addPasteHandler: boolean;
   allowFullscreen: boolean;
   autoplay: boolean;
@@ -32,7 +32,7 @@ export interface YoutubeOptions {
   width: number;
 }
 
-type SetYoutubeVideoOptions = {
+type setEmbedOptions = {
   src?: string;
   width?: number;
   height?: number;
@@ -41,16 +41,13 @@ type SetYoutubeVideoOptions = {
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
-    youtube: {
-      /**
-       * Insert a youtube video
-       */
-      setYoutubeVideo: (options: SetYoutubeVideoOptions) => ReturnType;
+    embed: {
+      createEmbed: (options: setEmbedOptions) => ReturnType;
     };
   }
 }
 
-export const Youtube = Node.create<YoutubeOptions>({
+export const Embed = Node.create<EmbedOptions>({
   name: "youtube",
 
   addOptions() {
@@ -108,18 +105,10 @@ export const Youtube = Node.create<YoutubeOptions>({
     };
   },
 
-  parseHTML() {
-    return [
-      {
-        tag: 'youtube',
-      },
-    ];
-  },
-
   addCommands() {
     return {
-      setYoutubeVideo:
-        (options: SetYoutubeVideoOptions) =>
+      createEmbed:
+        (options: setEmbedOptions) =>
           ({ commands }) => {
             if (options?.src && !isValidYoutubeUrl(options.src)) {
               return false;
@@ -133,22 +122,6 @@ export const Youtube = Node.create<YoutubeOptions>({
     };
   },
 
-  // addPasteRules() {
-  //   if (!this.options.addPasteHandler) {
-  //     return [];
-  //   }
-
-  //   return [
-  //     nodePasteRule({
-  //       find: YOUTUBE_REGEX_GLOBAL,
-  //       type: this.type,
-  //       getAttributes: (match) => {
-  //         return { src: match.input };
-  //       },
-  //     }),
-  //   ];
-  // },
-
   addNodeView() {
     return ({
       editor,
@@ -160,7 +133,7 @@ export const Youtube = Node.create<YoutubeOptions>({
     }) => {
       const { view } = editor;
       if (HTMLAttributes.src) {
-        const embedUrl = getEmbedUrlFromYoutubeUrl({
+        const embedUrl = getEmbedUrl({
           url: HTMLAttributes.src,
           allowFullscreen: this.options.allowFullscreen,
           autoplay: this.options.autoplay,
@@ -265,62 +238,5 @@ export const Youtube = Node.create<YoutubeOptions>({
         return true;
       }
     }
-  },
-
-  renderHTML({ HTMLAttributes, node }) {
-    return ['youtube', mergeAttributes(HTMLAttributes)];
-    // const embedUrl = getEmbedUrlFromYoutubeUrl({
-    //   url: HTMLAttributes.src,
-    //   allowFullscreen: this.options.allowFullscreen,
-    //   autoplay: this.options.autoplay,
-    //   ccLanguage: this.options.ccLanguage,
-    //   ccLoadPolicy: this.options.ccLoadPolicy,
-    //   controls: this.options.controls,
-    //   disableKBcontrols: this.options.disableKBcontrols,
-    //   enableIFrameApi: this.options.enableIFrameApi,
-    //   endTime: this.options.endTime,
-    //   interfaceLanguage: this.options.interfaceLanguage,
-    //   ivLoadPolicy: this.options.ivLoadPolicy,
-    //   loop: this.options.loop,
-    //   modestBranding: this.options.modestBranding,
-    //   nocookie: this.options.nocookie,
-    //   origin: this.options.origin,
-    //   playlist: this.options.playlist,
-    //   progressBarColor: this.options.progressBarColor,
-    //   startAt: HTMLAttributes.start || 0,
-    // });
-
-    // HTMLAttributes.src = embedUrl;
-
-    // const el = document.createElement("input");
-    // new Preview({
-    //   target: el,
-    //   props: {
-    //     iframeAttributes: mergeAttributes(
-    //       this.options.HTMLAttributes,
-    //       {
-    //         width: this.options.width,
-    //         height: this.options.height,
-    //         allowfullscreen: this.options.allowFullscreen,
-    //         autoplay: this.options.autoplay,
-    //         ccLanguage: this.options.ccLanguage,
-    //         ccLoadPolicy: this.options.ccLoadPolicy,
-    //         disableKBcontrols: this.options.disableKBcontrols,
-    //         enableIFrameApi: this.options.enableIFrameApi,
-    //         endTime: this.options.endTime,
-    //         interfaceLanguage: this.options.interfaceLanguage,
-    //         ivLoadPolicy: this.options.ivLoadPolicy,
-    //         loop: this.options.loop,
-    //         modestBranding: this.options.modestBranding,
-    //         origin: this.options.origin,
-    //         playlist: this.options.playlist,
-    //         progressBarColor: this.options.progressBarColor,
-    //       },
-    //       HTMLAttributes
-    //     ),
-    //   },
-    // });
-
-    // return el;
   },
 });

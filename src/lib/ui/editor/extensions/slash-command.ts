@@ -6,15 +6,14 @@ import tippy from "tippy.js";
 import {
   CheckSquare,
   Code,
+  ExternalLink,
   Heading1,
   Heading2,
   Heading3,
   List,
   ListOrdered,
-  MessageSquarePlus,
   Text,
-  TextQuote,
-  Youtube,
+  TextQuote
 } from "lucide-svelte";
 import CommandList from "./CommandList.svelte";
 // import { toast } from 'sonner';
@@ -187,12 +186,12 @@ const getSuggestionItems = ({ query }: { query: string }) => {
         editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
     },
     {
-      title: "Video",
-      description: "Embed a video from YouTube",
-      searchTerms: ["video", "youtube"],
-      icon: Youtube,
+      title: "Embed",
+      description: "Embed a tweet, YouTube video, or Spotify track",
+      searchTerms: ["embed", "youtube", "tweet", "spotify"],
+      icon: ExternalLink,
       command: ({ editor, range }: CommandProps) => {
-        return editor.chain().deleteRange(range).setYoutubeVideo().run();
+        return editor.chain().deleteRange(range).createEmbed({}).run();
       },
     },
     // {

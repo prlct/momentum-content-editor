@@ -1,8 +1,9 @@
 <script lang="ts">
+  import { isValidUrl } from "$lib/utils.js";
+  import { X } from "lucide-svelte";
   import { onMount } from "svelte";
   import type { HTMLAttributes } from "svelte/elements";
-  import { YOUTUBE_REGEX, getEmbedUrlFromYoutubeUrl } from "./utils.js";
-  import { X } from "lucide-svelte";
+  import { getEmbedUrl } from "./utils.js";
 
   export let iframeAttributes: HTMLAttributes<HTMLIFrameElement>;
   export let remove: () => void;
@@ -15,7 +16,7 @@
   let inputEl: HTMLInputElement;
 
   function submit() {
-    if (YOUTUBE_REGEX.test(inputEl.value)) {
+    if (isValidUrl(inputEl.value)) {
       src = inputEl.value;
       updateSrc(src);
     } else {
@@ -28,18 +29,18 @@
 </script>
 
 {#if src}
-  <div data-youtube-video class="playerWrapper" bind:this={playerWrapper}>
+  <div class="playerWrapper" bind:this={playerWrapper}>
     <iframe
-      title="Youtube Player"
+      title="Embedded content"
+      src={getEmbedUrl({ url: src })}
       {...iframeAttributes}
-      src={getEmbedUrlFromYoutubeUrl({ url: src })}
     />
     <button class="destroyButton" on:click={remove}>
       <X />
     </button>
   </div>
 {:else}
-  <form data-youtube-video bind:this={popup} on:submit={submit}>
+  <form bind:this={popup} on:submit={submit}>
     <input
       class="preview_input"
       bind:this={inputEl}
@@ -100,17 +101,16 @@
     position: absolute;
     top: 6%;
     right: 6%;
-    /* background-color: rgba(0, 0, 0, 0.5); */
-    /* color: white; */
     border: none;
     border-radius: 0.5rem;
     padding: 0.5rem;
     cursor: pointer;
     z-index: 10;
-    color: #ccc;
+    background-color: #ccc;
+    color: white;
   }
 
   .destroyButton:hover {
-    color: white;
+    background-color: white;
   }
 </style>

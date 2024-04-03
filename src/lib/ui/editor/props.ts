@@ -1,6 +1,5 @@
 import type { EditorProps } from '@tiptap/pm/view';
 import { startImageUpload } from './plugins/upload-images.js';
-import { YOUTUBE_REGEX, YOUTUBE_REGEX_GLOBAL } from './youtube/utils.js';
 
 export const defaultEditorProps: EditorProps = {
 	attributes: {
