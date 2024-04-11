@@ -8,6 +8,7 @@ import Placeholder from '@tiptap/extension-placeholder';
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import TextStyle from '@tiptap/extension-text-style';
+import { Embed } from '../youtube/embed.js';
 import TiptapUnderline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
 import { Markdown } from 'tiptap-markdown';
@@ -107,6 +108,10 @@ export const defaultExtensions = [
 			if (node.type.name === 'heading') {
 				return `Heading ${node.attrs.level}`;
 			}
+			if (node.type.name === 'youtube') {
+				return;
+			}
+
 			return "Press '/' for commands, or '++' for AI autocomplete...";
 		},
 		includeChildren: true
@@ -130,7 +135,10 @@ export const defaultExtensions = [
 		nested: true
 	}),
 	Markdown.configure({
-		html: false,
+		html: true,
 		transformCopiedText: true
-	})
+	}),
+	Embed.configure({
+		inline: false,
+	}),
 ];
