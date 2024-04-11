@@ -1,5 +1,6 @@
 import type { EditorProps } from '@tiptap/pm/view';
 import { startImageUpload } from './plugins/upload-images.js';
+import { YOUTUBE_REGEX_GLOBAL } from './youtube/utils.js';
 
 export const defaultEditorProps: EditorProps = {
 	attributes: {
@@ -25,6 +26,21 @@ export const defaultEditorProps: EditorProps = {
 			startImageUpload(file, view, pos);
 			return true;
 		}
+
+		const content = event.clipboardData?.getData("text");
+		if (!content) {
+			return false;
+		}
+
+		if (YOUTUBE_REGEX_GLOBAL.test(content)) {
+			console.log(content)
+			
+			if (document.activeElement) {
+			(document.activeElement as HTMLInputElement).value = content;
+			}
+			return true;
+		}
+
 		return false;
 	},
 	handleDrop: (view, event, _slice, moved) => {
