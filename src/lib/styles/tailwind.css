@@ -106,6 +106,10 @@ h6 {
   font-weight: inherit;
 }
 
+h2 {
+  @apply text-4xl;
+}
+
 /*
 Reset links to optimize for opt-in styling instead of opt-out.
 */
@@ -584,8 +588,8 @@ video {
 }
 
 .prose-lg :where(p):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  margin-top: 1.3333333em;
-  margin-bottom: 1.3333333em;
+	line-height: 1.55;
+  @apply my-2;
 }
 
 .prose-lg :where([class~="lead"]):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
@@ -609,10 +613,7 @@ video {
 }
 
 .prose-lg :where(h2):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  font-size: 1.6666667em;
-  margin-top: 1.8666667em;
-  margin-bottom: 1.0666667em;
-  line-height: 1.3333333;
+  @apply text-3xl sm:text-4xl font-semibold mb-4 sm:mb-6 mt-0 mt-8;
 }
 
 .prose-lg :where(h3):not(:where([class~="not-prose"],[class~="not-prose"] *)) {

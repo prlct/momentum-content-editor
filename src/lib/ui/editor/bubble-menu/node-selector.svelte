@@ -28,12 +28,12 @@
 				!editor.isActive('bulletList') &&
 				!editor.isActive('orderedList')
 		},
-		{
-			name: 'Heading 1',
-			icon: Heading1,
-			command: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
-			isActive: editor.isActive('heading', { level: 1 })
-		},
+		// {
+		// 	name: 'Heading 1',
+		// 	icon: Heading1,
+		// 	command: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
+		// 	isActive: editor.isActive('heading', { level: 1 })
+		// },
 		{
 			name: 'Heading 2',
 			icon: Heading2,

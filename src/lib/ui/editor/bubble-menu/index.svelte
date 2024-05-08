@@ -37,7 +37,7 @@
 	export let pluginKey: BubbleMenuPluginProps['pluginKey'] = 'SvelteTiptapBubbleMenu';
 	export let shouldShow: BubbleMenuPluginProps['shouldShow'] = ({ editor }) => {
 		// don't show if image is selected
-		if (editor.isActive('image') || editor.isActive('youtube')) {
+		if (editor.isActive('image') || editor.isActive('social_embed') || editor.isActive('youtube')) {
 			return false;
 		}
 		return editor.view.state.selection.content().size > 0;

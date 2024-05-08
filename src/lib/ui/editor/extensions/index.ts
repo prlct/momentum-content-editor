@@ -15,6 +15,9 @@ import { Markdown } from 'tiptap-markdown';
 import UploadImagesPlugin from '../plugins/upload-images.js';
 import SlashCommand from './slash-command.js';
 import UpdatedImage from './updated-image.js';
+import GlobalDragHandle from 'tiptap-extension-global-drag-handle'
+// import AutoJoiner from 'tiptap-extension-auto-joiner'
+
 
 export const defaultExtensions = [
 	StarterKit.configure({
@@ -56,6 +59,17 @@ export const defaultExtensions = [
 		},
 		gapcursor: false
 	}),
+	
+	GlobalDragHandle.configure({
+		dragHandleWidth: 20,    // default
+
+		// The scrollTreshold specifies how close the user must drag an element to the edge of the lower/upper screen for automatic 
+		// scrolling to take place. For example, scrollTreshold = 100 means that scrolling starts automatically when the user drags an 
+		// element to a position that is max. 99px away from the edge of the screen
+		// You can set this to 0 to prevent auto scrolling caused by this extension
+		scrollTreshold: 100     // default
+	}),
+
 	// patch to fix horizontal rule bug: https://github.com/ueberdosis/tiptap/pull/3859#issuecomment-1536799740
 	HorizontalRule.extend({
 		addInputRules() {
@@ -108,7 +122,7 @@ export const defaultExtensions = [
 			if (node.type.name === 'heading') {
 				return `Heading ${node.attrs.level}`;
 			}
-			if (node.type.name === 'youtube') {
+			if (node.type.name === 'social_embed' || node.type.name==='youtube') {
 				return;
 			}
 
@@ -141,4 +155,5 @@ export const defaultExtensions = [
 	Embed.configure({
 		inline: false,
 	}),
+	// AutoJoiner,
 ];

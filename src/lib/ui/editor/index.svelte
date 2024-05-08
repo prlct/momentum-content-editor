@@ -29,7 +29,7 @@
 	 * Defaults to "relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-white p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg".
 	 */
 	let className =
-		'relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-white p-12 pb-24 sm:pb-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg';
+		'relative min-h-[500px] w-full border-stone-200 sm:rounded-lg px-[30px]';
 	export { className as class };
 	/**
 	 * The default value to use for the editor.
@@ -98,6 +98,7 @@
 		}
 	});
 
+	console.log('loaded defaultValue', defaultValue);
 	const content = createLocalStorageStore(storageKey, defaultValue);
 	let hydrated = false;
 	$: if (editor && !hydrated) {

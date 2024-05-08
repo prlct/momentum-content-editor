@@ -1,6 +1,6 @@
 import type { EditorProps } from '@tiptap/pm/view';
 import { startImageUpload } from './plugins/upload-images.js';
-import { YOUTUBE_REGEX_GLOBAL } from './youtube/utils.js';
+import { YOUTUBE_REGEX_GLOBAL, TWITTER_REGEX } from './youtube/utils.js';
 
 export const defaultEditorProps: EditorProps = {
 	attributes: {
@@ -32,9 +32,7 @@ export const defaultEditorProps: EditorProps = {
 			return false;
 		}
 
-		if (YOUTUBE_REGEX_GLOBAL.test(content)) {
-			console.log(content)
-			
+		if (YOUTUBE_REGEX_GLOBAL.test(content) || TWITTER_REGEX.test(content)) {
 			if (document.activeElement) {
 			(document.activeElement as HTMLInputElement).value = content;
 			}

@@ -48,7 +48,7 @@ declare module "@tiptap/core" {
 }
 
 export const Embed = Node.create<EmbedOptions>({
-  name: "youtube",
+  name: "social_embed",
 
   addOptions() {
     return {
@@ -179,8 +179,7 @@ export const Embed = Node.create<EmbedOptions>({
           iframeAttributes: mergeAttributes(
             this.options.HTMLAttributes,
             {
-              width: this.options.width,
-              height: this.options.height,
+              
               allowfullscreen: this.options.allowFullscreen,
               autoplay: this.options.autoplay,
               ccLanguage: this.options.ccLanguage,

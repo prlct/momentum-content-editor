@@ -2,7 +2,7 @@ export const YOUTUBE_REGEX =
   /^(https?:\/\/)?(www\.|music\.)?(youtube\.com|youtu\.be|youtube-nocookie\.com)\/(?!channel\/)(?!@)(.+)?$/;
 export const YOUTUBE_REGEX_GLOBAL =
   /^(https?:\/\/)?(www\.|music\.)?(youtube\.com|youtu\.be)\/(?!channel\/)(?!@)(.+)?$/g;
-const TWITTER_REGEX = /^https?:\/\/twitter\.com\/\w+\/status\/\d+\/?$/;
+export const TWITTER_REGEX = /^https?:\/\/twitter\.com\/\w+\/status\/\d+\/?$/;
 
 export const isValidYoutubeUrl = (url: string) => {
   return url.match(YOUTUBE_REGEX);
@@ -35,8 +35,10 @@ export const getYoutubeEmbedUrl = (nocookie?: boolean) => {
     : "https://www.youtube.com/embed/";
 };
 
-export const getEmbedUrlFromTwitter = (options: GetEmbedUrlOptions) =>
-  `https://twitframe.com/show?url=${options.url}`;
+// export const getEmbedUrlFromTwitter = (options: GetEmbedUrlOptions) =>
+//   `https://twitframe.com/show?url=${options.url}`;
+
+export const getEmbedUrlFromTwitter = (options: GetEmbedUrlOptions) => options.url;
 
 export const getEmbedUrlFromYoutubeUrl = (options: GetEmbedUrlOptions) => {
   const {

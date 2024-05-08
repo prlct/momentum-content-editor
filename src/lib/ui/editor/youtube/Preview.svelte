@@ -23,18 +23,63 @@
       alert("Invalid url");
     }
   }
+
+  let isMounted = false;
+  
   onMount(() => {
-    inputEl?.focus();
+    setTimeout(() => {
+      isMounted = true;
+      inputEl?.focus();
+    }, 0);
+
   });
+
+  let embedEl;
+  
+  if (src && (src.includes('twitter.com') || src.includes('x.com'))) {
+		setTimeout(() => {
+      if (embedEl.getAttribute('data-loaded')) {
+				return;
+			}
+      console.log('loading tweet...');
+
+			embedEl.setAttribute('data-loaded', true);
+
+      if (embedEl.innerHTML.includes('twitter-tweet-rendered')) {
+        return;
+      }
+
+			window.twttr.widgets.createTweet(
+				src.split('status/')[1],
+				embedEl, // parent element where tweet will go
+				{
+					conversation: 'none',
+					theme: 'dark' // tweet theme
+				}
+			);
+		}, 500);
+	}
 </script>
 
 {#if src}
   <div class="playerWrapper" bind:this={playerWrapper}>
-    <iframe
-      title="Embedded content"
-      src={getEmbedUrl({ url: src })}
-      {...iframeAttributes}
-    />
+    {#if isMounted}
+      {#if src?.includes('twitter.com') || src?.includes('x.com')}
+        <div bind:this={embedEl} class="w-full flex justify-center" data-url={src}>
+          <blockquote class="twitter-tweet" data-conversation="none" data-theme="dark">
+            <a href={src} />
+          </blockquote>
+        </div>
+      {:else}
+        <iframe
+        title="Embedded content"
+        src={getEmbedUrl({ url: src })}
+        {...iframeAttributes}
+        style="aspect-ratio: 536 / 300; height: auto;"
+      />
+      {/if}
+    {/if}
+   
     <button class="destroyButton" on:click={remove}>
       <X />
     </button>
@@ -44,6 +89,7 @@
     <input
       class="preview_input"
       bind:this={inputEl}
+      autofocus
       type="text"
       placeholder="Enter link..."
     />

@@ -4,6 +4,11 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500&family=DM+Sans:wght@700&family=Barlow:wght@400;700&family=Cabin:wght@600&family=Calistoga&family=Fraunces:wght@400;500&family=IBM+Plex+Sans&family=Montserrat&family=Poppins:wght@400;600&family=Quattrocento&family=Questrial&family=Syne:wght@400;700&family=Roboto+Mono:wght@400;500;600&family=Changa:wght@700&display=swap" rel="stylesheet" rel="stylesheet">
+		
+		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 		<title>Novel Svelte</title>
 		%sveltekit.head%
 	</head>
@@ -13,16 +18,19 @@
 			if (themePref) themePref = JSON.parse(themePref);
 			const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
 
-			if (themePref === 'dark') {
-				document.documentElement.classList.add('dark-theme');
-				document.documentElement.style.colorScheme = 'dark';
-			} else if (themePref === 'light') {
-				document.documentElement.classList.remove('dark-theme');
-				document.documentElement.style.colorScheme = 'light';
-			} else if (darkThemeMq.matches) {
-				document.documentElement.classList.add('dark-theme');
-				document.documentElement.style.colorScheme = 'dark';
-			}
+			document.documentElement.style.colorScheme = 'light';
+
+
+			// if (themePref === 'dark') {
+			// 	document.documentElement.classList.add('dark-theme');
+			// 	document.documentElement.style.colorScheme = 'dark';
+			// } else if (themePref === 'light') {
+			// 	document.documentElement.classList.remove('dark-theme');
+			// 	document.documentElement.style.colorScheme = 'light';
+			// } else if (darkThemeMq.matches) {
+			// 	document.documentElement.classList.add('dark-theme');
+			// 	document.documentElement.style.colorScheme = 'dark';
+			// }
 		</script>
 		<div>%sveltekit.body%</div>
 	</body>
