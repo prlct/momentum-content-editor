@@ -103,20 +103,20 @@ const getSuggestionItems = ({ query }: { query: string }) => {
         editor.chain().focus().deleteRange(range).toggleTaskList().run();
       },
     },
-    {
-      title: "Heading 1",
-      description: "Big section heading.",
-      searchTerms: ["title", "big", "large"],
-      icon: Heading1,
-      command: ({ editor, range }: CommandProps) => {
-        editor
-          .chain()
-          .focus()
-          .deleteRange(range)
-          .setNode("heading", { level: 1 })
-          .run();
-      },
-    },
+    // {
+    //   title: "Heading 1",
+    //   description: "Big section heading.",
+    //   searchTerms: ["title", "big", "large"],
+    //   icon: Heading1,
+    //   command: ({ editor, range }: CommandProps) => {
+    //     editor
+    //       .chain()
+    //       .focus()
+    //       .deleteRange(range)
+    //       .setNode("heading", { level: 1 })
+    //       .run();
+    //   },
+    // },
     {
       title: "Heading 2",
       description: "Medium section heading.",
