@@ -11,7 +11,7 @@
 		ListOrdered,
 		TextIcon,
 		Code,
-		CheckSquare
+		CheckSquare,
 	} from 'lucide-svelte';
 
 	export let editor: Editor;
@@ -76,7 +76,7 @@
 			icon: Code,
 			command: () => editor.chain().focus().toggleCodeBlock().run(),
 			isActive: editor.isActive('codeBlock')
-		}
+		},
 	];
 
 	$: activeItem = items.filter((item) => item.isActive).pop() ?? {

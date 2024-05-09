@@ -122,6 +122,22 @@ export const Embed = Node.create<EmbedOptions>({
     };
   },
 
+  renderHTML({ HTMLAttributes }) {
+    return ['a', { 'data-embed': true, href: HTMLAttributes.src }, 0]
+  },
+
+  // parseHTML() {
+  //   return [
+  //     {
+  //       tag: 'a',
+  //       getAttrs: element => {
+  //         console.log('getAttrs el');
+  //         element.getAttribute('data-embed')
+  //       },
+  //     },
+  //   ]
+  // },
+
   addNodeView() {
     return ({
       editor,

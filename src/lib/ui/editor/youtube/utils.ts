@@ -2,7 +2,7 @@ export const YOUTUBE_REGEX =
   /^(https?:\/\/)?(www\.|music\.)?(youtube\.com|youtu\.be|youtube-nocookie\.com)\/(?!channel\/)(?!@)(.+)?$/;
 export const YOUTUBE_REGEX_GLOBAL =
   /^(https?:\/\/)?(www\.|music\.)?(youtube\.com|youtu\.be)\/(?!channel\/)(?!@)(.+)?$/g;
-export const TWITTER_REGEX = /^https?:\/\/twitter\.com\/\w+\/status\/\d+\/?$/;
+export const TWITTER_REGEX = /^https?:\/\/twitter\.com\/$/;
 
 export const isValidYoutubeUrl = (url: string) => {
   return url.match(YOUTUBE_REGEX);
@@ -34,11 +34,6 @@ export const getYoutubeEmbedUrl = (nocookie?: boolean) => {
     ? "https://www.youtube-nocookie.com/embed/"
     : "https://www.youtube.com/embed/";
 };
-
-// export const getEmbedUrlFromTwitter = (options: GetEmbedUrlOptions) =>
-//   `https://twitframe.com/show?url=${options.url}`;
-
-export const getEmbedUrlFromTwitter = (options: GetEmbedUrlOptions) => options.url;
 
 export const getEmbedUrlFromYoutubeUrl = (options: GetEmbedUrlOptions) => {
   const {
@@ -163,17 +158,21 @@ export const getEmbedUrlFromYoutubeUrl = (options: GetEmbedUrlOptions) => {
   return outputUrl;
 };
 
-const embeddors = new Map([
-  [YOUTUBE_REGEX, getEmbedUrlFromYoutubeUrl],
-  [TWITTER_REGEX, getEmbedUrlFromTwitter],
-]);
+let embeddors = {
+  twitter: { test: (url: string) => url.includes('twitter.com') || url.includes('x.com') },
+  youtube: { test: (url: string) => url.includes('youtube.com') }
+}
 
 export const isValidUrl = (url: string) => {
-  for (const [regex] of embeddors) {
-    if (url.match(regex)) {
-      return true;
-    }
-  }
+  let isValid = false;
+  
+  Object.keys(embeddors).forEach(embeddorKey => {
+    if (embeddors[embeddorKey].test(url)) {
+      isValid = true; 
+    };
+  });
+
+  return isValid;
 };
 
 export const getEmbedUrl = (options: GetEmbedUrlOptions) => {
@@ -181,11 +180,9 @@ export const getEmbedUrl = (options: GetEmbedUrlOptions) => {
     return null;
   }
 
-  for (const [regex, embedder] of embeddors) {
-    if (options.url.match(regex)) {
-      return embedder(options);
-    }
+  if (options.url.includes('youtube.com')) {
+    return getEmbedUrlFromYoutubeUrl(options);
   }
 
-  return null;
+  return options.url;
 };

@@ -148,10 +148,10 @@ export const defaultExtensions = [
 		},
 		nested: true
 	}),
-	Markdown.configure({
-		html: true,
-		transformCopiedText: true
-	}),
+	// Markdown.configure({
+	// 	html: true,
+	// 	// transformCopiedText: true
+	// }),
 	Embed.configure({
 		inline: false,
 	}),

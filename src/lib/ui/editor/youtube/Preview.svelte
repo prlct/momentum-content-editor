@@ -50,7 +50,7 @@
       }
 
 			window.twttr.widgets.createTweet(
-				src.split('status/')[1],
+				src.split('?')[0].split('status/')[1],
 				embedEl, // parent element where tweet will go
 				{
 					conversation: 'none',

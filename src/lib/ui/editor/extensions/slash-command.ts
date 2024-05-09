@@ -191,7 +191,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       searchTerms: ["embed", "youtube", "tweet", "spotify"],
       icon: ExternalLink,
       command: ({ editor, range }: CommandProps) => {
-        return editor.chain().deleteRange(range).createEmbed({}).run();
+        return editor.chain().focus().deleteRange(range).createEmbed({}).run();
       },
     },
     // {
