@@ -13,10 +13,22 @@
 	let lastUpdatedOn = new Date();
 
 	let sectionId = $page.url.searchParams.get('sectionId');
+	
+	let theme =  $page.url.searchParams.get('theme') || 'light';
+
+	if (browser) {
+		if (theme === 'dark') {
+			document.documentElement.classList.add('dark-theme');
+			document.documentElement.style.colorScheme = 'dark';
+			document.documentElement.style.color = 'rgba(255,255,255,.8)';
+		} else {
+			document.documentElement.classList.remove('dark-theme');
+			document.documentElement.style.colorScheme = 'light';
+		}
+	}
 
 	if (browser) {
 		let htmlEl = document.getElementsByTagName('html')[0];
-		
 
 		window.parent.postMessage({ name: 'editor:onPageLoaded', data: { pageLoaded: true, sectionId } }, '*');
 
